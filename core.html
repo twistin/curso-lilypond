@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Curso para la asignatura Nuevas Tecnologías, del Conservatorio Municipal de Música Reveriano Soutullo, para la creaación y edición de partituras con la herramienta de notación musical Lilypond basada en Python.">
+
+<title>curso-lilypond - Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="curso-lilypond - Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.">
+<meta property="og:description" content="Curso para la asignatura Nuevas Tecnologías, del Conservatorio Municipal de Música Reveriano Soutullo, para la creaación y edición de partituras con la herramienta de notación musical Lilypond…">
+<meta property="og:site-name" content="curso-lilypond">
+<meta name="twitter:title" content="curso-lilypond - Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.">
+<meta name="twitter:description" content="Curso para la asignatura Nuevas Tecnologías, del Conservatorio Municipal de Música Reveriano Soutullo, para la creaación y edición de partituras con la herramienta de notación musical Lilypond…">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">curso-lilypond</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">curso-lilypond</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link active">Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción-y-primera-partitura." id="toc-introducción-y-primera-partitura." class="nav-link active" data-scroll-target="#introducción-y-primera-partitura.">Introducción y primera partitura.</a></li>
+  <li><a href="#historia-de-la-tipografía-musical" id="toc-historia-de-la-tipografía-musical" class="nav-link" data-scroll-target="#historia-de-la-tipografía-musical">Historia de la tipografía musical</a></li>
+  <li><a href="#instalación" id="toc-instalación" class="nav-link" data-scroll-target="#instalación">Instalación</a></li>
+  <li><a href="#primera-partitura" id="toc-primera-partitura" class="nav-link" data-scroll-target="#primera-partitura">Primera partitura</a></li>
+  <li><a href="#compilación-del-archivo" id="toc-compilación-del-archivo" class="nav-link" data-scroll-target="#compilación-del-archivo">Compilación del archivo</a>
+  <ul class="collapse">
+  <li><a href="#cómo-escribir-archivos-de-entrada" id="toc-cómo-escribir-archivos-de-entrada" class="nav-link" data-scroll-target="#cómo-escribir-archivos-de-entrada">Cómo escribir archivos de entrada</a>
+  <ul class="collapse">
+  <li><a href="#notación-sencilla" id="toc-notación-sencilla" class="nav-link" data-scroll-target="#notación-sencilla">Notación sencilla</a></li>
+  <li><a href="#duraciones" id="toc-duraciones" class="nav-link" data-scroll-target="#duraciones">Duraciones</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/twistin/curso-lilypond/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Curso de edición y creación de partituras con Lilypond. Año académico 2022-2023.</h1>
+</div>
+
+<div>
+  <div class="description">
+    Curso para la asignatura Nuevas Tecnologías, del Conservatorio Municipal de Música Reveriano Soutullo, para la creaación y edición de partituras con la herramienta de notación musical Lilypond basada en Python.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="introducción-y-primera-partitura." class="level2">
+<h2 class="anchored" data-anchor-id="introducción-y-primera-partitura.">Introducción y primera partitura.</h2>
+<section id="tema-i" class="level4">
+<h4 class="anchored" data-anchor-id="tema-i">Tema I</h4>
+<p>LilyPond es un programa de tipografía musical o edición de partituras, consagrado a la producción de partituras de la calidad más alta posible. Lleva la estética de la música tipografiada de la forma tradicional a las partituras impresas mediante ordenador.</p>
+</section>
+</section>
+<section id="historia-de-la-tipografía-musical" class="level2">
+<h2 class="anchored" data-anchor-id="historia-de-la-tipografía-musical">Historia de la tipografía musical</h2>
+<p>El arte de la tipografía musical recibe el nombre de grabado (en plancha), un término que deriva del proceso manual de la impresión musical. Los impresores europeos de la antigüedad exploraron diversos procesos, entre los que se incluían los bloques de madera tallados a mano, los tipos móviles y planchas finas de metal grabadas. La composición tipográfica tenía la ventaja de poderse corregir más fácilmente y facilitar la inclusión de textos y la letra de las canciones, pero sólo el grabado ofrecía la posibilidad de elaborar notación libre de compromisos y limitaciones anticipadas. Al final, las partituras grabadas a mano se convirtieron en el estándar de toda la música impresa, con la excepción de algunos himnarios y cancioneros en los que la composición tipográfica estaba justificada por su comodidad y economía, incluso bien entrado el s.XX.</p>
+<p>Hace tan sólo unas décadas, las partituras se hacían cortando y estampando la música en una plancha de zinc o estaño en imagen invertida como en un espejo. La plancha se entintaba, y las depresiones producidas por el grabado y el estampado retenían la tinta. Se formaba una imagen presionando el papel contra la plancha. El cortado y estampado se hacía completamente a mano y era muy fastidioso hacer una corrección, por lo que el grabado había de ser casi perfecto a la primera. El grabado era una habilidad fuertemente especializada; un artesano tenía que cursar unos cinco años de entrenamiento antes de poder obtener el título de maestro grabador, y se necesitaban otros cinco años para adquirir una verdadera habilidad en el oficio. <a href="https://lilypond.org/doc/v2.22/Documentation/essay.es.pdf">Fuente: página oficial Lilypond</a></p>
+<p>Ventajas de usar Lilypond respecto a otros programas:</p>
+<ul>
+<li>Es gratis</li>
+<li>Es Open-Source</li>
+<li>Es multiplataforma</li>
+</ul>
+<p>Beneficios de usar Lilypond</p>
+<p>Las partituras se guardan en un simple archivo de texto <code>.txt</code> que puede ser editado con cualquier otro editor. - No tiene formatos propietarios - Puede editar partituras en cualquier lugar del mundo con cualquier dispositivo, y salvar los archivos del proyecto en DropBox, p.&nbsp;ej. y usarlos en cualquier editor de texto genérico</p>
+<p>Lilypond usa la estética del antiguo grabado de música a mano tradicional.</p>
+<p>Puede integrar extractos de partituras o partituras completas en una variedad de otros proyectyos, incluidos documentos Latex, artículos científicos, musicología y trabajos de investigación e incluso HTML.</p>
+<p>La instalación del programa sólo ocupa 25 Mb en la memoria, a diferencia de otros editores convencionales de 1 Gb o más</p>
+<p>Por último, Lilypond es gratis. ¿Qué se quiere decir con gratis? No sólo en un sentido material, es decir, no cuesta nada, no hay que comprarlo. Sino que además podemos ser completamente libres para usar, modificar, añadir, publicar, etc.. el programa y el uso que se haga de él.</p>
+</section>
+<section id="instalación" class="level2">
+<h2 class="anchored" data-anchor-id="instalación">Instalación</h2>
+<p>Lo primero que debemos hacer es descargar el programa. Abrimos el navegador y vamos a la página oficial de <a href="https://lilypond.org">Lilypond</a></p>
+<p>En la parte derecha de la ventana de la página veremos un menú de descarga donde se nos ofrece dos opciones para descargar, una estable y otra en desarrollo que es la más reciente. Escogemos esta segunda opción que que será sufucuente para lo que estamnos haciendo. Escogemos la opción de nuestro sistema operativo. Una vez descargada ejecutamos el programa por primera vez. Si parece no suceder nada, no entres en pánico. Esto es normal, está revisando las fuentes de tu sistema y una vez que finalice se abrirá. Obviamente este proceso será más rápido la próxima vez.</p>
+<p>Cuando se abra Lilypond aparecerá una ventana emergente con un texto incorporado al editor de manera predeterminada. Seleccionamos todo el texto y lo eliminamos. A continuación lo salvamos en una carpeta previamente creada para nuestos proyectos.</p>
+<p>La extensión por defecto del archivo guardado es <code>.ly</code></p>
+</section>
+<section id="primera-partitura" class="level2">
+<h2 class="anchored" data-anchor-id="primera-partitura">Primera partitura</h2>
+<p>La primera declaración de la partitura debe ser la versión que estamos usando de Lilypond:</p>
+<p><code>\version "2.23.14"</code></p>
+<p>Esta declaración es importante entre otras cosas, porque si queremos correr la declaración con una versión anterior nos devolverá un mensaje de error que indicará que el programa es demasiado antiguo.</p>
+<p>La siguiente parte de la partitura es la sección principal donde se colocará las articulaciones dinámicas de las notas musicales reales. Cuando se trabaja con Lilypond se debe pensar en la partitura como representada por expresiones musicales. Por ejemplo una sóla nota es una expresión musical. Para empezar a escribir notas lo primero que tenemos que hacer es escribir dos llaves donde se colocaran las notas en su interior:</p>
+<p><code>{    }</code></p>
+<p>Ejemplo:</p>
+<p><code>{ a b c d e}</code></p>
+<p>Si ejecutamos esta partitura sucederá que creaá dos archivos. Uno de registro, dónde se informará del proceso y de los errores si los hubiere y un segundo un PDF donde aparecerán las notas que hemos escrito entre llaves en un pentagrama, es decir nuestra partitura.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./abcde.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>Lo que ha sucedido es que Lilypond además de escribir nuestras notas La,si,Do,Re y Mi, ha escrito otros elementos él sólo por nosotros. Cmo la clave, el compás las líneas del pentagrama y divisoria. Debe apreciarse que también por defecto nos ha proporcionado una duración de las notas que al ser cinco, distribuyó en 5 negras en dos compases. Cubriremos este aspecto en las próximas clases. Pero por ahora, acabas de crear tu primera partitura con Lilypond.</p>
+</section>
+<section id="compilación-del-archivo" class="level1">
+<h1>Compilación del archivo</h1>
+<p><em>Compilación</em> es una palabra que significa procesar un texto de entrada en formato de LilyPond para producir un archivo que se puede imprimir y (de manera opcional) un archivo MIDI que se puede reproducir. El primer ejemplo muestra el aspecto de un sencillo archivo de texto de entrada.</p>
+<p>Este ejemplo muestra un archivo de entrada sencillo:</p>
+<pre><code>\version "2.22.2"
+{
+  c' e' g' e'
+}</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./notas.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<section id="cómo-escribir-archivos-de-entrada" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-escribir-archivos-de-entrada">Cómo escribir archivos de entrada</h2>
+<section id="notación-sencilla" class="level3">
+<h3 class="anchored" data-anchor-id="notación-sencilla">Notación sencilla</h3>
+<section id="alturas" class="level4">
+<h4 class="anchored" data-anchor-id="alturas">Alturas</h4>
+<p><em>Glosario musical: pitch, interval, scale, middle C, octave, accidental.</em></p>
+<p>LilyPond emplea letras minúsculas para las alturas. Los nombres de nota en todos los ejemplos de esta sección usan la nomenclatura holandesa, en que las teclas blancas del piano van desde la c (Do) hasta la b (Si). Sin embargo, LilyPond contempla muchos otros sistemas para los nombres de las notas, como el inglés o el ‘Do fijo’ (do-re-mi-…). Véase idiomas Nombres de las notas en otros idiomas. Las letras desde c hasta b denotan las alturas de las notas de la ‘octava corta’ por debajo del Do central. Los sufijos ’ (apóstrofo) o , (coma) se añaden para indicar octavas más agudas o más graves. A continuación se muestra una escala que comienza en el Do central, y un arpegio:</p>
+<p>{ c’ d’ e’ f’ g’ a’ b’ c’’ g c’ e’ g’ c’’ e’’ g’’ c’’’ }</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>La manera más sencilla de introducir las notas es mediante la utilización del modo (relativo). En este modo, se elige la octava automáticamente bajo la suposición de que la siguiente nota se colocará siempre lo más cerca de la nota actual, es decir, se colocará en la octava comprendida dentro de hasta tres espacios de pentagrama a partir de la nota anterior. Comenzaremos por introducir el fragmento musical más elemental: una escala, donde cada nota está comprendida dentro de tan sólo un espacio de pentagrama desde la nota anterior.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  c<span class="st">' d e f</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="er">  g a b c</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>La nota inicial, escrita como c’, es el Do central. Cada nota sucesiva se coloca lo más cerca posible de la nota previa (en otras palabras: la primera ‘c’ es el Do más cercano al Do central; a éste le sigue el Re más cercano a la nota previa, y así sucesivamente). Podemos crear melodías con intervalos mayores, aún sin dejar de utilizar el modo relativo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  d<span class="st">' f a g</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="er">  c b f d</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>En el ejemplo anterior, la primera nota (d’, con un apóstrofo) es el Re que está en la octava que va del Do central al Si por encima de él.</p>
+<p>Añadiendo (o eliminando) comillas simples ’ o comas , a la primera nota, podemos cambiar la octava de inicio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  e<span class="st">''</span> c a c</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>Al principio, el modo relativo puede resultar algo confuso, pero es la forma más sencilla de introducir la mayor parte de las melodías. Veamos cómo funciona en la práctica este cálculo relativo. Comenzando por Si, que está situado en la línea central en clave de Sol, podemos alcanzar Do, Re y Mi dentro de los tres espacios de pentagrama hacia arriba, y La, Sol y Fa dentro de los tres espacios hacia abajo. Por tanto, si la nota siguiente a Si es Do, Re o Mi se supondrá que está por encima del Si, mientras que La, Sol o Fa se entenderán situados por debajo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">b' c  % el Do est</span><span class="er">á</span><span class="st"> un espacio por encima, es el Do de arriba</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="er">  b d  % el Re está dos por encima ó 5 por debajo, es el Re de arriba</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="er">  b e  % el Mi está 3 por encima ó 4 por debajo, es el Mi de arriba</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="er">  b a  % el La está 6 por encima ó 1 por debajo, es el La de abajo</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="er">  b g  % el Sol está 5 por encima ó 2 por debajo, es el Sol de abajo</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="er">  b f  % el Fa está 4 por encima ó 3 por debajo, es el Fa de abajo</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>Lo mismo exactamente ocurre cuando cualquiera de esas notas llevan un sostenido o un bemol. Las Alteraciones accidentales se ignoran totalmente en el cálculo de la posición relativa. Exactamente la misma cuenta de espacios de pentagrama se hace a partir de una nota situada en cualquier otro lugar del mismo.</p>
+<p>Para añadir intervalos mayores de tres espacios de pentagrama, podemos elevar la octava añadiendo una comilla simple ’ (o apóstrofo) a continuación del nombre de la nota. También podemos bajar la octava escribiendo una coma , a continuación del nombre de la nota.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  a<span class="st">' a, c'</span> f,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  g g<span class="st">''</span> a,, <span class="ss">f'</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./alturas5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Alt text</figcaption><p></p>
+</figure>
+</div>
+<p>Para subir o bajar una nota en dos (¡o más!) octavas, utilizamos varias ’’ ó ,, (pero tenga cuidado de utilizar dos comillas simples ’’ ¡y no una comilla doble ” !)</p>
+</section>
+</section>
+<section id="duraciones" class="level3">
+<h3 class="anchored" data-anchor-id="duraciones">Duraciones</h3>
+<p><em>Glosario musical: beam, duration, whole note, half note, quarter note, dotted note.</em></p>
+<p>La duración de una nota se especifica mediante un número después del nombre de la nota: 1 significa redonda, 2 significa blanca, 4 significa negra y así sucesivamente. Las barras de corchea se añaden automáticamente.</p>
+<p>Si no especifica una duración, se utiliza la duración previa para la nota siguiente. La figura por omisión de la primera nota es una negra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  a<span class="st">'1</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="er">  a2 a4 a8 a</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="er">  a16 a a a a32 a a a a64 a a a a a a a a2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para crear notas con puntillo, añada un punto . al número de la duración. La duración de una nota con puntillo se debe especificar de forma explícita (es decir: mediante un número).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>\relative {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  a<span class="st">'4 a a4. a8</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="er">  a8. a16 a a8. a8 a4.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
